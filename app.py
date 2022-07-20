@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return render_template("index.html", title="Trang chủ")
+    return 1
 
 @app.route("/up-load", methods=["POST"])
 def upload_file():
