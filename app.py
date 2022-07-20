@@ -2,6 +2,7 @@ import cv2
 from flask import Flask, render_template, request, redirect, flash
 import numpy as np
 import base64
+import serverless_wsgi
 
 app = Flask(__name__)
 
@@ -54,5 +55,8 @@ def upload_file():
 
     return render_template("index.html", image = image, title="Trang chủ")
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=80, debug=True)
+# if __name__ == "__main__":
+#     app.run(host="0.0.0.0", port=80, debug=True)
+
+def handler(event, context):
+    return serverless_wsgi.handle_request(app, event, context)
