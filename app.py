@@ -1,8 +1,8 @@
 import cv2
 from flask import Flask, render_template, request, redirect, flash
 import numpy as np
-import base64
 import serverless_wsgi
+import base64
 
 app = Flask(__name__)
 
@@ -20,8 +20,8 @@ def upload_file():
         flash('No selected file')
         return redirect(request.url)
     
-    path_input = "input.png"
-    path_output = "output.png"
+    path_input = "/tmp/input.png"
+    path_output = "/tmp/output.png"
     file.save(path_input)
 
     #-----------------------------
@@ -49,14 +49,11 @@ def upload_file():
 
     #-----------------------------
 
-    with open("output.png", "rb") as img_file:
+    with open("/tmp/output.png", "rb") as img_file:
         b64_string = base64.b64encode(img_file.read())
     image = b64_string.decode('utf-8')
 
     return render_template("index.html", image = image, title="Trang chủ")
-
-# if __name__ == "__main__":
-#     app.run(host="0.0.0.0", port=80, debug=True)
 
 def handler(event, context):
     return serverless_wsgi.handle_request(app, event, context)
